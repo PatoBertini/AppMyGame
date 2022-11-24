@@ -5,6 +5,7 @@ import StartGameScreen from "./screens/StartGameScreen";
 import { useState } from "react";
 import GameScreen from "./screens/GameScreen";
 import { useFonts } from "expo-font";
+import ResultScreen from "./screens/ResultScreen";
 
 export default function App() {
   const [loaded] = useFonts({
@@ -12,15 +13,31 @@ export default function App() {
   });
 
   const [userNumber, setUserNumber] = useState();
+  const [winOrLose, setWinOrLose] = useState(false);
+  const [result, setResult] = useState("");
 
   const handleStartGame = (selectedNumber) => {
     setUserNumber(selectedNumber);
   };
 
+  const handleFinishGame = (selection, number) => {
+    if (
+      (selection === "lower" && userNumber < number) ||
+      (selection === "greater" && userNumber > number)
+    ) {
+      setResult("Win");
+    } else {
+      setResult("Lose");
+    }
+    setWinOrLose(true);
+  };
+
   let content = <StartGameScreen onStartGame={handleStartGame} />;
 
-  if (userNumber) {
-    content = <GameScreen />;
+  if (userNumber && winOrLose === true) {
+    content = <ResultScreen result={result} userNumber={userNumber} />;
+  } else if (userNumber) {
+    content = <GameScreen handleResult={handleFinishGame} />;
   }
 
   if (!loaded) {
@@ -29,7 +46,10 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Header title={"Adivina el numero"} newStyles={{fontFamily:'Montserrat'}}/>
+      <Header
+        title={"Adivina el numero"}
+        newStyles={{ fontFamily: "Montserrat" }}
+      />
       {content}
     </View>
   );

@@ -7,13 +7,14 @@ import {
   Pressable,
   Button,
   TouchableWithoutFeedback,
+  KeyboardAvoidingView,
 } from "react-native";
 import React, { useState } from "react";
 import Card from "../components/Card";
 import colors from "../constants/colors";
 import Input from "../components/Input";
 
-const StartGameScreen = ({onStartGame}) => {
+const StartGameScreen = ({ onStartGame }) => {
   const [value, setValue] = useState("");
   const [confirmed, setConfirmed] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState("");
@@ -43,10 +44,7 @@ const StartGameScreen = ({onStartGame}) => {
           <Text>Elije un numero</Text>
           <Input value={value} onChangeText={handleInput} />
           <View style={styles.buttonContainer}>
-            <Pressable
-              style={styles.cleanButton}
-              onPress={handleResetInput}
-            >
+            <Pressable style={styles.cleanButton} onPress={handleResetInput}>
               <Text style={{ color: "white" }}>Limpiar</Text>
             </Pressable>
             <Pressable
@@ -61,9 +59,12 @@ const StartGameScreen = ({onStartGame}) => {
           <Card newStyles={{ marginTop: 50, width: 150 }}>
             <Text>Tu numero</Text>
             <Text>{selectedNumber}</Text>
-            <Button title="Empezar juego" onPress={() => onStartGame(selectedNumber)} />
+            <Button
+              title="Empezar juego"
+              onPress={() => onStartGame(selectedNumber)}
+            />
           </Card>
-          )}
+        )}
       </View>
     </TouchableWithoutFeedback>
   );

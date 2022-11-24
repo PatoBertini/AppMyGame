@@ -2,7 +2,7 @@ import { StyleSheet, Text, Button, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
 
-const GameScreen = () => {
+const GameScreen = ({ handleResult }) => {
   const [currentGuess, setCurrentGuess] = useState();
 
   useEffect(() => {
@@ -11,11 +11,17 @@ const GameScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text>La suposicion del oponente</Text>
+      <Text>El numero elegido por tu oponente es mayor o menor a:</Text>
       <Text>{currentGuess}</Text>
       <Card newStyles={styles.buttonContainer}>
-        <Button title="Menor" />
-        <Button title="Mayor" />
+        <Button
+          title="Menor"
+          onPress={() => handleResult("lower", currentGuess)}
+        />
+        <Button
+          title="Mayor"
+          onPress={() => handleResult("greater", currentGuess)}
+        />
       </Card>
     </View>
   );

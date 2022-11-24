@@ -11,7 +11,8 @@ export default Card;
 
 const styles = StyleSheet.create({
   inputContainer: {
-    width: 300,
+    width: '80%',
+    minWidth: 300,
     alignItems: "center",
     padding: 20,
     alignItems: "center",
